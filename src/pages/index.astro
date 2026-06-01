@@ -117,8 +117,112 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <section class="find-me">
-    <h2>Find Me</h2>
+  <section class="skills" id="skills">
+    <h2 class="skills-title">Skills</h2>
+    <p class="skills-subtitle">The technologies that I work with in my tech stack.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+          </svg>
+          <h3>Embedded Systems</h3>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Verilog</span><span class="skill-pct">92%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Digital Hardware Architecture</span><span class="skill-pct">90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">FPGA Development</span><span class="skill-pct">88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Embedded C/C++</span><span class="skill-pct">86%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:86%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">High-Level Synthesis</span><span class="skill-pct">82%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+          </svg>
+          <h3>Web / App Development</h3>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Python</span><span class="skill-pct">95%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">PyTorch</span><span class="skill-pct">90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">REST APIs & Networking</span><span class="skill-pct">85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Data Engineering & Analytics</span><span class="skill-pct">78%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Full-Stack Application Development</span><span class="skill-pct">72%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:72%"></div></div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+          <h3>Infrastructure</h3>
+        </div>
+        <ul class="skill-list">
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Computer Networking</span><span class="skill-pct">92%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Distributed Systems Concepts</span><span class="skill-pct">84%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:84%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">CUDA / GPU Computing</span><span class="skill-pct">83%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:83%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">Linux Systems & Dev Environment</span><span class="skill-pct">82%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div>
+          </li>
+          <li class="skill-item">
+            <div class="skill-meta"><span class="skill-name">AI Infrastructure & Model Deployment</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="find-me" id="contact">
+    <h2>Contact</h2>
     <ul>
       <li><a href="https://github.com/EdwinTieu5642" target="_blank" rel="noopener noreferrer">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/edwin-tieu-2abbd/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
