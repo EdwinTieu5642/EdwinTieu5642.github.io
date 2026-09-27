@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Edwin Tieu's personal portfolio site, built with Astro (v6) and deployed as a GitHub Pages user site (`EdwinTieu5642.github.io`, served from the domain root — no `base` path needed).
+Edwin Tieu's personal portfolio site, built with Astro (v7) and deployed as a GitHub Pages user site (`EdwinTieu5642.github.io`, served from the domain root — no `base` path needed).
 
 ## Commands
 
