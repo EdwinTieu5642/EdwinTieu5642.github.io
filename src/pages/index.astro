@@ -1,9 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image, getImage } from "astro:assets";
+import edwinPhoto from "../assets/edwin.jpg";
+import heroBackgroundSrc from "../assets/WebsiteBackground.jpg";
+
+const heroBackground = await getImage({
+  src: heroBackgroundSrc,
+  width: 1920,
+  format: "webp",
+});
 ---
 
 <BaseLayout title="Edwin — Home">
-  <section class="hero">
+  <section class="hero" style={`--hero-bg-image: url(${heroBackground.src})`}>
     <div class="hero-content">
       <div class="availability-badge">
         <span class="availability-dot"></span>
@@ -38,7 +47,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <section class="about" id="about">
     <h2 class="about-title">About Me</h2>
     <div class="intro">
-      <img src="/edwin.jpg" alt="Edwin Tieu" class="intro-photo" />
+      <Image src={edwinPhoto} alt="Edwin Tieu" class="intro-photo" width={600} height={600} />
       <div class="intro-text">
         <p>
           I'm an Embedded Software Engineer passionate about solving hard problems at the intersection of AI and Defense. I earned both my B.S. in Computer Science and Computer Engineering and my M.S. in Computer Engineering from USC.
@@ -233,7 +242,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <span class="experience-company">Northrop Grumman</span>
             <span class="experience-location">Aug 2026 – Present · Woodland Hills, CA</span>
           </div>
-          <span class="experience-date">Aug 2026 – Present</span>
         </div>
         <p class="experience-desc">Implemented software on the EGI-M Navigation unit.</p>
       </div>
@@ -245,7 +253,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <span class="experience-company">Northrop Grumman</span>
             <span class="experience-location">May 2025 – Jul 2025 · Woodland Hills, CA</span>
           </div>
-          <span class="experience-date">May 2025 – Jul 2025</span>
         </div>
         <p class="experience-desc">Diagnosed bugs in an EGI-M navigation unit, automated SPIRENT Simulator communications to double testing throughput, and validated system performance against DOORS requirements.</p>
       </div>
@@ -257,7 +264,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <span class="experience-company">Northrop Grumman</span>
             <span class="experience-location">Jun 2024 – Aug 2024 · Woodland Hills, CA · On-site</span>
           </div>
-          <span class="experience-date">Jun 2024 – Aug 2024</span>
         </div>
         <p class="experience-desc">Optimized Tableau dashboards with SQL to improve run times by 103%, integrated and tested an EGI-M navigation system against IBM DOORS requirements, and developed MATLAB test scripts to meet customer specifications.</p>
       </div>
@@ -269,7 +275,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <span class="experience-company">Northrop Grumman</span>
             <span class="experience-location">May 2023 – Aug 2023 · Woodland Hills, CA · On-site</span>
           </div>
-          <span class="experience-date">May 2023 – Aug 2023</span>
         </div>
         <p class="experience-desc">Automated the lab's inventory tracking system using MATLAB and Confluence REST APIs, developed cybersecurity clearance documentation to streamline government processes, and expanded employee access to 3D printing resources.</p>
       </div>
