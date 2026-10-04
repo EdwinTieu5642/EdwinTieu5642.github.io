@@ -1,17 +1,31 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
 import { Image, getImage } from "astro:assets";
 import edwinPhoto from "../assets/edwin.jpg";
 import heroBackgroundSrc from "../assets/WebsiteBackground.jpg";
+import { socials } from "../data/socials";
+import { projects } from "../data/projects";
+import { skillGroups } from "../data/skills";
+import { experience } from "../data/experience";
 
 const heroBackground = await getImage({
   src: heroBackgroundSrc,
   width: 1920,
   format: "webp",
 });
+
+const stats = [
+  { value: "1", label: "iOS App Shipped" },
+  { value: "3", label: "Research Projects" },
+  { value: "3", label: "Internships Worked" },
+  { value: "∞", label: "Curiosity" },
+];
+
+const externalLink = { target: "_blank", rel: "noopener noreferrer" };
 ---
 
-<BaseLayout title="Edwin — Home">
+<BaseLayout title="Edwin Tieu — Embedded Software Engineer">
   <section class="hero" style={`--hero-bg-image: url(${heroBackground.src})`}>
     <div class="hero-content">
       <div class="availability-badge">
@@ -24,28 +38,17 @@ const heroBackground = await getImage({
         from Inertial Navigation Systems to Acoustic Localization Networks.
       </p>
       <div class="hero-links">
-        <a href="https://github.com/EdwinTieu5642" class="hero-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.87-1.36-3.87-1.36-.52-1.32-1.28-1.67-1.28-1.67-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12 24 5.65 18.85.5 12 .5Z" />
-          </svg>
-        </a>
-        <a href="https://www.linkedin.com/in/edwin-tieu-2abbd/" class="hero-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M20.45 20.45h-3.55v-5.56c0-1.33-.03-3.04-1.86-3.04-1.86 0-2.15 1.45-2.15 2.95v5.65H9.34V9h3.4v1.56h.05c.47-.9 1.63-1.86 3.35-1.86 3.59 0 4.25 2.36 4.25 5.43v6.32ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46C23.21 24 24 23.23 24 22.27V1.73C24 .77 23.21 0 22.23 0Z" />
-          </svg>
-        </a>
-        <a href="mailto:edwindysontieu@gmail.com" class="hero-link" aria-label="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="4" width="20" height="16" rx="2" />
-            <path d="m2 7 10 6 10-6" />
-          </svg>
-        </a>
+        {socials.map((s) => (
+          <a href={s.href} class="hero-link" aria-label={s.label} {...(s.external ? externalLink : {})}>
+            <Icon icon={s.icon} />
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="about" id="about">
-    <h2 class="about-title">About Me</h2>
+  <section class="section about" id="about">
+    <h2 class="section-title">About Me</h2>
     <div class="intro">
       <Image src={edwinPhoto} alt="Edwin Tieu" class="intro-photo" width={600} height={600} />
       <div class="intro-text">
@@ -62,255 +65,115 @@ const heroBackground = await getImage({
     </div>
   </section>
 
-  <section class="stats">
+  <section class="section stats">
     <div class="stats-grid">
-      <div class="stat-card">
-        <span class="stat-value">1</span>
-        <span class="stat-label">iOS App Shipped</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value">3</span>
-        <span class="stat-label">Research Projects</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value">3</span>
-        <span class="stat-label">Internships Worked</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value">∞</span>
-        <span class="stat-label">Curiosity</span>
-      </div>
+      {stats.map((s) => (
+        <div class="stat-card">
+          <span class="stat-value">{s.value}</span>
+          <span class="stat-label">{s.label}</span>
+        </div>
+      ))}
     </div>
   </section>
 
-  <section class="projects" id="projects">
-    <h2 class="projects-title">Projects</h2>
-    <p class="projects-subtitle">Examples of my work in embedded systems and software engineering.</p>
-    <div class="projects-grid">
-      <a class="project-card" href="https://www.guides-maker.com/archiwalk" target="_blank" rel="noopener noreferrer">
-        <div class="project-card-header">
-          <svg class="project-icon" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.459 2.208 3.09 3.792 3.029 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
-          <h3>ArchiWalk iOS App</h3>
-        </div>
-        <p>An architectural tour app that brings buildings to life through guided experiences. It uses Generative AI platforms to make tours more accessible to the general public.</p>
-        <div class="project-tags">
-          <span class="tag">Swift</span>
-          <span class="tag">Python</span>
-          <span class="tag">Figma</span>
-        </div>
-      </a>
-      <div class="project-card">
-        <div class="project-card-header">
-          <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          <h3>Acoustic Localization in IoBT</h3>
-        </div>
-        <p>DoD-commissioned research in partnership with USC to develop low-cost, interconnected sensor networks capable of detecting and classifying audio sources on the battlefield.</p>
-        <div class="project-tags">
-          <span class="tag">ROS</span>
-          <span class="tag">Python</span>
-          <span class="tag">Linux</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-card-header">
-          <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
-          <h3>3D4E Freehand Group</h3>
-        </div>
-        <p>Led a team of 8 engineers in partnership with Children's Hospital Los Angeles (CHLA) to design and fabricate 3D-printed prosthetics for pediatric patients with limb differences.</p>
-        <div class="project-tags">
-          <span class="tag">CAD</span>
-          <span class="tag">Leadership</span>
-          <span class="tag">Blender</span>
-        </div>
-      </div>
+  <section class="section" id="projects">
+    <h2 class="section-title">Projects</h2>
+    <p class="section-subtitle">Examples of my work in embedded systems and software engineering.</p>
+    <div class="card-grid">
+      {projects.map((p) => {
+        const Card = p.href ? "a" : "div";
+        return (
+          <Card class="card card-hover project-card" {...(p.href ? { href: p.href, ...externalLink } : {})}>
+            <div class="card-header">
+              <Icon icon={p.icon} class="project-icon" size={p.iconSize} />
+              <h3>{p.title}</h3>
+            </div>
+            <p>{p.description}</p>
+            <div class="project-tags">
+              {p.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          </Card>
+        );
+      })}
     </div>
   </section>
 
-  <section class="skills" id="skills">
-    <h2 class="skills-title">Skills</h2>
-    <p class="skills-subtitle">The technologies that I work with in my tech stack.</p>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <div class="skill-card-header">
-          <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
-            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
-          </svg>
-          <h3>Embedded Systems</h3>
+  <section class="section skills" id="skills">
+    <h2 class="section-title">Skills</h2>
+    <p class="section-subtitle">The technologies that I work with in my tech stack.</p>
+    <div class="card-grid">
+      {skillGroups.map((g) => (
+        <div class="card skill-card">
+          <div class="card-header">
+            <Icon icon={g.icon} class="skill-icon" />
+            <h3>{g.title}</h3>
+          </div>
+          <ul class="skill-list">
+            {g.items.map((item) => (
+              <li class="skill-item">
+                <div class="skill-meta">
+                  <span class="skill-name">{item.name}</span>
+                  <span class="skill-pct">{item.level}%</span>
+                </div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" style={`--level: ${item.level}%`}></div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul class="skill-list">
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Verilog</span><span class="skill-pct">92%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="92%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Digital Hardware Architecture</span><span class="skill-pct">90%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">FPGA Development</span><span class="skill-pct">88%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Embedded C/C++</span><span class="skill-pct">86%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="86%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">High-Level Synthesis</span><span class="skill-pct">82%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82%"></div></div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-card-header">
-          <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-          </svg>
-          <h3>Web / App Development</h3>
-        </div>
-        <ul class="skill-list">
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Python</span><span class="skill-pct">95%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">PyTorch</span><span class="skill-pct">90%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">REST APIs & Networking</span><span class="skill-pct">85%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Data Engineering & Analytics</span><span class="skill-pct">78%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="78%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Full-Stack Application Development</span><span class="skill-pct">72%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="72%"></div></div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-card-header">
-          <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-          </svg>
-          <h3>Infrastructure</h3>
-        </div>
-        <ul class="skill-list">
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Computer Networking</span><span class="skill-pct">92%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="92%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Distributed Systems Concepts</span><span class="skill-pct">84%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="84%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">CUDA / GPU Computing</span><span class="skill-pct">83%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="83%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">Linux Systems & Dev Environment</span><span class="skill-pct">82%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82%"></div></div>
-          </li>
-          <li class="skill-item">
-            <div class="skill-meta"><span class="skill-name">AI Infrastructure & Model Deployment</span><span class="skill-pct">80%</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80%"></div></div>
-          </li>
-        </ul>
-      </div>
+      ))}
     </div>
   </section>
 
-  <section class="experience" id="experience">
-    <h2 class="experience-title">Experience</h2>
-    <p class="experience-subtitle">Where I've worked and what I've built.</p>
+  <section class="section" id="experience">
+    <h2 class="section-title">Experience</h2>
+    <p class="section-subtitle">Where I've worked and what I've built.</p>
     <div class="experience-list">
-
-      <div class="experience-item">
-        <div class="experience-header">
-          <div class="experience-meta">
-            <h3 class="experience-role">Embedded Software Engineer</h3>
-            <span class="experience-company">Northrop Grumman</span>
-            <span class="experience-location">Aug 2026 – Present · Woodland Hills, CA</span>
+      {experience.map((job) => (
+        <div class="card experience-item">
+          <div class="experience-header">
+            <div class="experience-meta">
+              <h3 class="experience-role">{job.role}</h3>
+              <span class="experience-company">{job.company}</span>
+              <span class="experience-location">{job.period} · {job.location}</span>
+            </div>
           </div>
+          <p class="experience-desc">{job.description}</p>
         </div>
-        <p class="experience-desc">Implemented software on the EGI-M Navigation unit.</p>
-      </div>
-
-      <div class="experience-item">
-        <div class="experience-header">
-          <div class="experience-meta">
-            <h3 class="experience-role">Embedded Software Engineering Intern</h3>
-            <span class="experience-company">Northrop Grumman</span>
-            <span class="experience-location">May 2025 – Jul 2025 · Woodland Hills, CA</span>
-          </div>
-        </div>
-        <p class="experience-desc">Diagnosed bugs in an EGI-M navigation unit, automated SPIRENT Simulator communications to double testing throughput, and validated system performance against DOORS requirements.</p>
-      </div>
-
-      <div class="experience-item">
-        <div class="experience-header">
-          <div class="experience-meta">
-            <h3 class="experience-role">Embedded Software Engineer Intern</h3>
-            <span class="experience-company">Northrop Grumman</span>
-            <span class="experience-location">Jun 2024 – Aug 2024 · Woodland Hills, CA · On-site</span>
-          </div>
-        </div>
-        <p class="experience-desc">Optimized Tableau dashboards with SQL to improve run times by 103%, integrated and tested an EGI-M navigation system against IBM DOORS requirements, and developed MATLAB test scripts to meet customer specifications.</p>
-      </div>
-
-      <div class="experience-item">
-        <div class="experience-header">
-          <div class="experience-meta">
-            <h3 class="experience-role">Embedded Software Engineering Intern</h3>
-            <span class="experience-company">Northrop Grumman</span>
-            <span class="experience-location">May 2023 – Aug 2023 · Woodland Hills, CA · On-site</span>
-          </div>
-        </div>
-        <p class="experience-desc">Automated the lab's inventory tracking system using MATLAB and Confluence REST APIs, developed cybersecurity clearance documentation to streamline government processes, and expanded employee access to 3D printing resources.</p>
-      </div>
-
+      ))}
     </div>
   </section>
 
-  <section class="blog" id="blog">
-    <h2 class="blog-title">Blog</h2>
-    <p class="blog-subtitle">Thoughts on engineering, research, and building things.</p>
+  <section class="section" id="blog">
+    <h2 class="section-title">Blog</h2>
+    <p class="section-subtitle">Thoughts on engineering, research, and building things.</p>
     <p class="blog-empty">No blogs yet...but will come soon!</p>
   </section>
 
-  <section class="find-me" id="contact">
+  <section class="section find-me" id="contact">
     <h2>Contact</h2>
     <ul>
-      <li><a href="https://github.com/EdwinTieu5642" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/edwin-tieu-2abbd/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-      <li><a href="mailto:edwindysontieu@gmail.com">Email</a></li>
+      {socials.map((s) => (
+        <li><a href={s.href} {...(s.external ? externalLink : {})}>{s.label}</a></li>
+      ))}
     </ul>
   </section>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
-          const el = bar as HTMLElement;
-          el.style.width = el.dataset.width ?? '0%';
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-
+  // Animate the skill bars from 0 the first time the section scrolls into view.
+  // Without JS the bars render at full width (see `.js` rules in global.css).
   const skillsSection = document.querySelector('.skills');
-  if (skillsSection) observer.observe(skillsSection);
+  if (skillsSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(skillsSection);
+  }
 </script>
 </BaseLayout>
