@@ -13,13 +13,13 @@ const style = size ? `width:${size}px;height:${size}px;` : undefined;
 const paint =
   icon.style === "fill"
     ? { fill: "currentColor" }
-    : {
+    : ({
         fill: "none",
         stroke: "currentColor",
         "stroke-width": "2",
         "stroke-linecap": "round",
         "stroke-linejoin": "round",
-      };
+      } as const);
 ---
 
 <svg class={className} style={style} viewBox="0 0 24 24" aria-hidden="true" {...paint} set:html={icon.body}></svg>

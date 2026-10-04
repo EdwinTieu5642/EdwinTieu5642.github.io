@@ -23,9 +23,30 @@ const stats = [
 ];
 
 const externalLink = { target: "_blank", rel: "noopener noreferrer" };
+
+// schema.org Person markup so search engines can show a rich result for a
+// name search. `sameAs` links profiles that belong to the same person.
+const portrait = await getImage({ src: edwinPhoto, width: 600, height: 600, format: "jpg" });
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Edwin Tieu",
+  url: Astro.site?.href,
+  image: new URL(portrait.src, Astro.site).href,
+  jobTitle: "Embedded Software Engineer",
+  worksFor: { "@type": "Organization", name: experience[0].company },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "University of Southern California" },
+  sameAs: socials.filter((s) => s.external).map((s) => s.href),
+};
 ---
 
 <BaseLayout title="Edwin Tieu — Embedded Software Engineer">
+  <Fragment slot="head">
+    <!-- The hero image is a CSS background, which the browser only discovers
+         after the stylesheet loads; preloading starts the download right away. -->
+    <link rel="preload" as="image" type="image/webp" href={heroBackground.src} fetchpriority="high" />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  </Fragment>
   <section class="hero" style={`--hero-bg-image: url(${heroBackground.src})`}>
     <div class="hero-content">
       <div class="availability-badge">

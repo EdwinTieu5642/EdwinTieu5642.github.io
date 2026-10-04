@@ -108,6 +108,12 @@ h1 {
 .site-nav a {
   margin-left: 1.25rem;
   color: var(--text-primary);
+  transition: color 0.2s ease;
+}
+
+/* Set by the scroll observer in BaseLayout for the section in view. */
+.site-nav a[aria-current="location"] {
+  color: var(--accent-cyan);
 }
 
 .nav-toggle {
@@ -254,6 +260,9 @@ section[id] {
 .hero {
   margin: -2rem calc(-50vw + 50%) 0;
   min-height: calc(100vh - 4rem);
+  /* Small-viewport units keep the hero from jumping as mobile browser
+     toolbars show and hide. */
+  min-height: calc(100svh - 4rem);
   display: flex;
   align-items: center;
   justify-content: center;

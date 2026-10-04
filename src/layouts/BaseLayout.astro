@@ -46,11 +46,12 @@ const socialImageUrl = new URL(socialImage.src, Astro.site);
 
     <!-- Lets CSS tell JS-enabled visitors apart (used by the skill bar animation). -->
     <script is:inline>document.documentElement.classList.add("js");</script>
+    <slot name="head" />
   </head>
   <body>
     <header class="site-header">
       <a href="/" class="site-title">Edwin</a>
-      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
         <svg class="icon-hamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
@@ -61,7 +62,7 @@ const socialImageUrl = new URL(socialImage.src, Astro.site);
           <line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
-      <nav class="site-nav">
+      <nav class="site-nav" id="site-nav" aria-label="Main">
         <a href="/#about">About</a>
         <a href="/#projects">Projects</a>
         <a href="/#skills">Skills</a>
@@ -88,10 +89,60 @@ const socialImageUrl = new URL(socialImage.src, Astro.site);
     toggle.setAttribute('aria-expanded', String(isOpen));
   });
 
-  nav.querySelectorAll('a').forEach(link => {
+  // Highlight the nav link for the section currently in view. A section counts
+  // as "in view" when it crosses a thin band just above the middle of the
+  // viewport; the last link wins once the page is scrolled to the bottom,
+  // since the short Contact section never reaches that band. A clicked link
+  // stays highlighted until the visitor scrolls on their own, because sections
+  // near the end of the page (Blog) can't scroll far enough to reach the band.
+  const navLinks = new Map<string, HTMLAnchorElement>();
+  nav.querySelectorAll<HTMLAnchorElement>('a[href^="/#"]').forEach(link => {
+    navLinks.set(link.hash.slice(1), link);
+  });
+  const lastId = [...navLinks.keys()].at(-1);
+  let bandId: string | null = null;
+  let clickedId: string | null = null;
+
+  const render = () => {
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    const activeId = clickedId ?? (atBottom ? lastId : bandId);
+    navLinks.forEach((link, id) => {
+      if (id === activeId) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target.id;
+      if (navLinks.has(id)) bandId = id;
+      // Sections without a nav link (e.g. Stats) keep the previous highlight,
+      // except the hero, which clears it.
+      else if (entry.target.classList.contains('hero')) bandId = null;
+    });
+    render();
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  document.querySelectorAll('main section').forEach(section => sectionObserver.observe(section));
+  window.addEventListener('scroll', render, { passive: true });
+
+  nav.querySelectorAll<HTMLAnchorElement>('a').forEach(link => {
     link.addEventListener('click', () => {
       nav.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
+      clickedId = navLinks.has(link.hash.slice(1)) ? link.hash.slice(1) : null;
+      render();
     });
   });
+
+  // Manual scrolling hands control back to the observer.
+  const releaseClick = () => {
+    if (clickedId === null) return;
+    clickedId = null;
+    render();
+  };
+  for (const type of ['wheel', 'touchstart', 'keydown'] as const) {
+    window.addEventListener(type, releaseClick, { passive: true });
+  }
 </script>
