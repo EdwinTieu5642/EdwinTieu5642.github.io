@@ -13,7 +13,8 @@ export const experience: Job[] = [
     company: "Northrop Grumman",
     period: "Aug 2026 – Present",
     location: "Woodland Hills, CA",
-    description: "Implemented software on the EGI-M Navigation unit.",
+    description:
+      "Own end-to-end testing of the Blended Navigation Assurance feature on the EGI-M inertial navigation system. Build and configure test benches and communicate with the unit over MIL-STD-1553 to isolate and diagnose software defects.",
   },
   {
     role: "Embedded Software Engineering Intern",
