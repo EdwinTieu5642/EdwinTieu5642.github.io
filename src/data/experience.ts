@@ -22,15 +22,15 @@ export const experience: Job[] = [
     period: "May 2025 – Jul 2025",
     location: "Woodland Hills, CA",
     description:
-      "Diagnosed bugs in an EGI-M navigation unit, automated SPIRENT Simulator communications to double testing throughput, and validated system performance against DOORS requirements.",
+      "Traced EGI-M test failures to system software, test station, or Spirent simulator faults. Led a lab-wide initiative to automate Spirent simulator–test station communication and enable 24/7 remote access, doubling testing throughput. Analyzed High-Speed Serial Interface, RS-232, and RS-422 test data to verify the unit met its performance requirements.",
   },
   {
-    role: "Embedded Software Engineer Intern",
+    role: "Embedded Software Engineering Intern",
     company: "Northrop Grumman",
     period: "Jun 2024 – Aug 2024",
     location: "Woodland Hills, CA · On-site",
     description:
-      "Optimized Tableau dashboards with SQL to improve run times by 103%, integrated and tested an EGI-M navigation system against IBM DOORS requirements, and developed MATLAB test scripts to meet customer specifications.",
+      "Optimized the SQL behind Tableau dashboards that every scrum team uses to track requirement counts and velocity, improving run times by 103%. Integrated and tested software on the EGI-M navigation system against IBM DOORS requirements, and developed MATLAB test scripts from system test case requirements.",
   },
   {
     role: "Embedded Software Engineering Intern",
@@ -38,6 +38,6 @@ export const experience: Job[] = [
     period: "May 2023 – Aug 2023",
     location: "Woodland Hills, CA · On-site",
     description:
-      "Automated the lab's inventory tracking system using MATLAB and Confluence REST APIs, developed cybersecurity clearance documentation to streamline government processes, and expanded employee access to 3D printing resources.",
+      "Automated lab inventory tracking with MATLAB and the Confluence REST API, publishing live equipment status to Confluence. Reviewed next-generation navigation software requirements in IBM DOORS, and created reusable cybersecurity document templates that streamlined clearance between Northrop Grumman and government agencies.",
   },
 ];
