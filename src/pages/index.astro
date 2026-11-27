@@ -124,7 +124,7 @@ const personSchema = {
     <p class="section-subtitle">The technologies that I work with in my tech stack.</p>
     <div class="card-grid">
       {skillGroups.map((g) => (
-        <div class="card skill-card">
+        <div class="card card-hover skill-card">
           <div class="card-header">
             <Icon icon={g.icon} class="skill-icon" />
             <h3>{g.title}</h3>
@@ -152,7 +152,7 @@ const personSchema = {
     <p class="section-subtitle">Where I've worked and what I've built.</p>
     <div class="experience-list">
       {experience.map((job) => (
-        <div class="card experience-item">
+        <div class="card card-hover experience-item">
           <div class="experience-header">
             <div class="experience-meta">
               <h3 class="experience-role">{job.role}</h3>

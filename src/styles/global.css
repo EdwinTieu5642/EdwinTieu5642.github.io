@@ -539,6 +539,11 @@ section[id] {
   border-left: 3px solid var(--accent-cyan);
 }
 
+/* `.card-hover:hover` recolors every side of the border; keep the cyan accent. */
+.experience-item.card-hover:hover {
+  border-left-color: var(--accent-cyan);
+}
+
 .experience-header {
   display: flex;
   justify-content: space-between;
