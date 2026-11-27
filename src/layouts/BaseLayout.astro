@@ -1,6 +1,9 @@
 ---
 import "@fontsource-variable/inter";
+import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/jetbrains-mono";
 import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import spaceGroteskLatin from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 import { getImage } from "astro:assets";
 import heroBackground from "../assets/WebsiteBackground.jpg";
@@ -29,8 +32,10 @@ const socialImageUrl = new URL(socialImage.src, Astro.site);
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <!-- Every page uses Inter; fetch the Latin subset before the CSS asks for it. -->
+    <!-- Body text (Inter) and headings (Space Grotesk) are above the fold on every
+         page; fetch their Latin subsets before the CSS asks for them. -->
     <link rel="preload" as="font" type="font/woff2" href={interLatin} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={spaceGroteskLatin} crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#090817" />
