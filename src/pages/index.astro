@@ -23,6 +23,15 @@ const stats = [
 ];
 
 const externalLink = { target: "_blank", rel: "noopener noreferrer" };
+// "Aug 2026" -> "2026-08", for machine-readable <time> elements.
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const toDatetime = (label: string) => {
+  const [month, year] = label.split(" ");
+  const index = months.indexOf(month);
+  return index >= 0 && year ? `${year}-${String(index + 1).padStart(2, "0")}` : undefined;
+};
+
+const email = socials.find((s) => s.href.startsWith("mailto:"))?.href.slice("mailto:".length);
 
 // schema.org Person markup so search engines can show a rich result for a
 // name search. `sameAs` links profiles that belong to the same person.
@@ -55,7 +64,7 @@ const personSchema = {
       </div>
       <h1>Edwin Tieu</h1>
       <p class="hero-subtitle">
-        Embedded Software Engineer building resilient defense systems - <br />
+        Embedded Software Engineer building resilient defense systems —
         from Inertial Navigation Systems to Acoustic Localization Networks.
       </p>
       <div class="hero-links">
@@ -66,9 +75,14 @@ const personSchema = {
         ))}
       </div>
     </div>
+    <a href="#about" class="hero-scroll" aria-label="Scroll to About">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </a>
   </section>
 
-  <section class="section about" id="about">
+  <section class="section reveal about" id="about">
     <h2 class="section-title">About Me</h2>
     <div class="intro">
       <Image src={edwinPhoto} alt="Edwin Tieu" class="intro-photo" width={600} height={600} />
@@ -86,7 +100,7 @@ const personSchema = {
     </div>
   </section>
 
-  <section class="section stats">
+  <section class="section reveal stats">
     <div class="stats-grid">
       {stats.map((s) => (
         <div class="stat-card">
@@ -97,29 +111,31 @@ const personSchema = {
     </div>
   </section>
 
-  <section class="section" id="projects">
+  <section class="section reveal" id="projects">
     <h2 class="section-title">Projects</h2>
     <p class="section-subtitle">Examples of my work in embedded systems and software engineering.</p>
-    <div class="card-grid">
+    <ul class="card-grid" role="list">
       {projects.map((p) => {
         const Card = p.href ? "a" : "div";
         return (
-          <Card class="card card-hover project-card" {...(p.href ? { href: p.href, ...externalLink } : {})}>
-            <div class="card-header">
-              <Icon icon={p.icon} class="project-icon" size={p.iconSize} />
-              <h3>{p.title}</h3>
-            </div>
-            <p>{p.description}</p>
-            <div class="project-tags">
-              {p.tags.map((t) => <span class="tag">{t}</span>)}
-            </div>
-          </Card>
+          <li>
+            <Card class="card card-hover project-card" {...(p.href ? { href: p.href, ...externalLink } : {})}>
+              <div class="card-header">
+                <Icon icon={p.icon} class="project-icon" size={p.iconSize} />
+                <h3>{p.title}</h3>
+              </div>
+              <p>{p.description}</p>
+              <div class="project-tags">
+                {p.tags.map((t) => <span class="tag">{t}</span>)}
+              </div>
+            </Card>
+          </li>
         );
       })}
-    </div>
+    </ul>
   </section>
 
-  <section class="section skills" id="skills">
+  <section class="section reveal skills" id="skills">
     <h2 class="section-title">Skills</h2>
     <p class="section-subtitle">The technologies that I work with in my tech stack.</p>
     <div class="card-grid">
@@ -147,54 +163,84 @@ const personSchema = {
     </div>
   </section>
 
-  <section class="section" id="experience">
+  <section class="section reveal" id="experience">
     <h2 class="section-title">Experience</h2>
     <p class="section-subtitle">Where I've worked and what I've built.</p>
-    <div class="experience-list">
+    <ol class="experience-list" role="list">
       {experience.map((job) => (
-        <div class="card card-hover experience-item">
+        <li class="card card-hover experience-item">
           <div class="experience-header">
             <div class="experience-meta">
               <h3 class="experience-role">{job.role}</h3>
               <span class="experience-company">{job.company}</span>
-              <span class="experience-location">{job.period} · {job.location}</span>
+              <span class="experience-location">
+                {job.period.split(" – ").map((part, i) => {
+                  const datetime = toDatetime(part);
+                  return <>{i > 0 && " – "}{datetime ? <time datetime={datetime}>{part}</time> : part}</>;
+                })} · {job.location}
+              </span>
             </div>
           </div>
           <p class="experience-desc">{job.description}</p>
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </section>
 
-  <section class="section" id="blog">
+  <section class="section reveal" id="blog">
     <h2 class="section-title">Blog</h2>
     <p class="section-subtitle">Thoughts on engineering, research, and building things.</p>
     <p class="blog-empty">No blogs yet...but will come soon!</p>
   </section>
 
-  <section class="section find-me" id="contact">
-    <h2>Contact</h2>
+  <section class="section reveal find-me" id="contact">
+    <h2 class="section-title">Contact</h2>
+    {email && (
+      <>
+        <p class="section-subtitle">The best way to reach me is by email.</p>
+        <div class="contact-email">
+          <a href={`mailto:${email}`}>{email}</a>
+          <!-- Revealed by the script below when the Clipboard API is available. -->
+          <button type="button" class="copy-email" data-email={email} aria-live="polite" hidden>Copy</button>
+        </div>
+      </>
+    )}
     <ul>
-      {socials.map((s) => (
+      {socials.filter((s) => s.external).map((s) => (
         <li><a href={s.href} {...(s.external ? externalLink : {})}>{s.label}</a></li>
       ))}
     </ul>
   </section>
 
 <script>
-  // Animate the skill bars from 0 the first time the section scrolls into view.
-  // Without JS the bars render at full width (see `.js` rules in global.css).
-  const skillsSection = document.querySelector('.skills');
-  if (skillsSection) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    observer.observe(skillsSection);
+  // Mark each section `in-view` the first time it scrolls into view: sections
+  // fade in and the skill bars grow from 0. Without JS everything renders
+  // as-is (see the `.js` rules in global.css).
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.reveal').forEach(section => revealObserver.observe(section));
+
+  // Copy-to-clipboard for the email address in the Contact section.
+  const copyButton = document.querySelector<HTMLButtonElement>('.copy-email');
+  if (copyButton && navigator.clipboard) {
+    copyButton.hidden = false;
+    let resetTimer: number | undefined;
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(copyButton.dataset.email ?? '');
+        copyButton.textContent = 'Copied!';
+      } catch {
+        copyButton.textContent = 'Copy failed';
+      }
+      clearTimeout(resetTimer);
+      resetTimer = window.setTimeout(() => { copyButton.textContent = 'Copy'; }, 2000);
+    });
   }
 </script>
 </BaseLayout>

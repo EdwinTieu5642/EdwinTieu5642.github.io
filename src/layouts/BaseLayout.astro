@@ -1,7 +1,11 @@
 ---
+import "@fontsource-variable/inter";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 import { getImage } from "astro:assets";
 import heroBackground from "../assets/WebsiteBackground.jpg";
+import Icon from "../components/Icon.astro";
+import { socials } from "../data/socials";
 
 interface Props {
   title: string;
@@ -24,6 +28,9 @@ const socialImageUrl = new URL(socialImage.src, Astro.site);
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Every page uses Inter; fetch the Latin subset before the CSS asks for it. -->
+    <link rel="preload" as="font" type="font/woff2" href={interLatin} crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#090817" />
@@ -51,6 +58,7 @@ const socialImageUrl = new URL(socialImage.src, Astro.site);
     <slot name="head" />
   </head>
   <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <header class="site-header">
       <a href="/" class="site-title">Edwin</a>
       <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
@@ -73,17 +81,30 @@ const socialImageUrl = new URL(socialImage.src, Astro.site);
         <a href="/#contact">Contact</a>
       </nav>
     </header>
-    <main>
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <footer class="site-footer">
-      <p>&copy; {new Date().getFullYear()} Edwin Tieu</p>
+      <div class="footer-links">
+        {socials.map((s) => (
+          <a href={s.href} aria-label={s.label} {...(s.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+            <Icon icon={s.icon} />
+          </a>
+        ))}
+      </div>
+      <p>&copy; {new Date().getFullYear()} Edwin Tieu · <a href="#top" class="back-to-top">Back to top <span aria-hidden="true">↑</span></a></p>
     </footer>
   </body>
 </html>
 
 <script>
+  const header = document.querySelector('.site-header') as HTMLElement;
   const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
+
+  // Separate the sticky header from the content once the page scrolls.
+  const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
   const nav = document.querySelector('.site-nav') as HTMLElement;
 
   toggle.addEventListener('click', () => {
