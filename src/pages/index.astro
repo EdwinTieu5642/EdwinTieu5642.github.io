@@ -8,6 +8,7 @@ import { socials } from "../data/socials";
 import { projects } from "../data/projects";
 import { skillGroups } from "../data/skills";
 import { experience } from "../data/experience";
+import { icons, type IconDef } from "../data/icons";
 
 const heroBackground = await getImage({
   src: heroBackgroundSrc,
@@ -15,11 +16,13 @@ const heroBackground = await getImage({
   format: "webp",
 });
 
-const stats = [
+// `icon` draws the value instead of typing it, for characters the display font
+// doesn't include (∞); `value` is still read out to screen readers.
+const stats: { value: string; label: string; icon?: IconDef }[] = [
   { value: "1", label: "iOS App Shipped" },
   { value: "3", label: "Research Projects" },
   { value: "3", label: "Internships Worked" },
-  { value: "∞", label: "Curiosity" },
+  { value: "∞", label: "Curiosity", icon: icons.infinity },
 ];
 
 const externalLink = { target: "_blank", rel: "noopener noreferrer" };
@@ -104,7 +107,9 @@ const personSchema = {
     <div class="stats-grid">
       {stats.map((s) => (
         <div class="stat-card">
-          <span class="stat-value">{s.value}</span>
+          <span class="stat-value">
+            {s.icon ? <><Icon icon={s.icon} class="stat-icon" /><span class="visually-hidden">{s.value}</span></> : s.value}
+          </span>
           <span class="stat-label">{s.label}</span>
         </div>
       ))}

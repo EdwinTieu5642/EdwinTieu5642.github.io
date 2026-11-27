@@ -80,6 +80,19 @@ a:hover {
   outline-offset: 3px;
 }
 
+/* Read by screen readers, not shown. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Hidden until a keyboard user tabs to it. */
 .skip-link {
   position: absolute;
@@ -545,6 +558,15 @@ section[id] {
   color: var(--accent-blue);
   line-height: 1;
   text-shadow: 0 0 20px rgba(147, 197, 253, 0.3);
+}
+
+/* Drawn values (∞) sized and weighted to match the bold digits. */
+.stat-icon {
+  display: block;
+  width: 1.1em;
+  height: 1em;
+  stroke-width: 2.75;
+  filter: drop-shadow(0 0 20px rgba(147, 197, 253, 0.3));
 }
 
 .stat-label {
