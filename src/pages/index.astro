@@ -26,6 +26,8 @@ const stats: { value: string; label: string; icon?: IconDef }[] = [
 ];
 
 const externalLink = { target: "_blank", rel: "noopener noreferrer" };
+// Served as-is from public/; replace that file to update the résumé.
+const resumeHref = "/EdwinTieuResume.pdf";
 // "Aug 2026" -> "2026-08", for machine-readable <time> elements.
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const toDatetime = (label: string) => {
@@ -190,6 +192,21 @@ const personSchema = {
         </li>
       ))}
     </ol>
+  </section>
+
+  <section class="section reveal" id="resume">
+    <h2 class="section-title">Résumé</h2>
+    <p class="section-subtitle">A one-page summary of my education, experience, and skills.</p>
+    <div class="resume-actions">
+      <a href={resumeHref} class="resume-button resume-button-primary" download="Edwin-Tieu-Resume.pdf">
+        <Icon icon={icons.download} />
+        Download PDF
+      </a>
+      <a href={resumeHref} class="resume-button" {...externalLink}>
+        <Icon icon={icons.fileText} />
+        View in Browser
+      </a>
+    </div>
   </section>
 
   <section class="section reveal" id="blog">

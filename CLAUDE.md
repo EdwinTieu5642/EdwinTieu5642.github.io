@@ -24,7 +24,7 @@ Requires Node >= 22.12.0 (see `package.json` engines).
 
 ## Architecture
 
-- **Single-page site**: `src/pages/index.astro` renders the homepage as stacked `<section>`s (hero, about, stats, projects, skills, experience, blog, contact). The header nav links to these via same-page anchors (`/#projects`, `/#skills`, etc.), not separate routes.
+- **Single-page site**: `src/pages/index.astro` renders the homepage as stacked `<section>`s (hero, about, stats, projects, skills, experience, résumé, blog, contact). The header nav links to these via same-page anchors (`/#projects`, `/#skills`, etc.), not separate routes.
 - **Content lives in `src/data/`** as typed arrays, and `index.astro` maps over them: `projects.ts`, `skills.ts`, `experience.ts`, and `socials.ts` (used by the hero icon buttons, the Contact links, and the footer icons). To add or edit a project/skill/job, edit the data file, not the markup. Inline SVG icons are defined once in `src/data/icons.ts` and rendered with `src/components/Icon.astro`. The stats row is a small array in `index.astro`'s frontmatter.
 - **`src/layouts/BaseLayout.astro`** is the shared shell that every page wraps its content in via `<slot />`:
   - `<head>`: title, description, canonical URL, and Open Graph/Twitter tags. The link-preview image is a 1200×630 crop of the hero moon background (`summary_large_image` card) — intentionally not the portrait.
@@ -43,7 +43,7 @@ Requires Node >= 22.12.0 (see `package.json` engines).
   - Skill bar widths come from an inline `--level` custom property. With JS, `.js .skills:not(.in-view)` holds them at 0 until that same observer adds `in-view`; without JS they render at full value.
   - The hero uses `100svh` (with a `100vh` fallback) so it doesn't jump as mobile browser toolbars show/hide.
   - Anchor targets get `scroll-margin-top` to clear the sticky header, keyboard focus gets a cyan `:focus-visible` outline, and a `prefers-reduced-motion` block disables animations/transitions.
-- **Assets**: photos (`edwin.jpg`, `WebsiteBackground.jpg`) live in `src/assets/` and go through `astro:assets` (`<Image />` / `getImage()`) for resizing and format conversion. Only `favicon.svg` and `apple-touch-icon.png` (a 180×180 render of the favicon) are in `public/`.
+- **Assets**: photos (`edwin.jpg`, `WebsiteBackground.jpg`) live in `src/assets/` and go through `astro:assets` (`<Image />` / `getImage()`) for resizing and format conversion. Only `favicon.svg`, `apple-touch-icon.png` (a 180×180 render of the favicon), and `EdwinTieuResume.pdf` (linked from the Résumé section; replace the file to update it) are in `public/`.
 
 ## Deployment
 
